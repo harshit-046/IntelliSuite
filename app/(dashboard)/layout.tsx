@@ -15,7 +15,6 @@ const DashboardLayout = ({
                 <main className="md:pl-72">
                     <NavBar></NavBar>
                     {children}
-                    Hello Content
                 </main>
             </div>
 

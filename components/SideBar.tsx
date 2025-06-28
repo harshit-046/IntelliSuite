@@ -1,8 +1,8 @@
 'use client'
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
 import { Montserrat } from "next/font/google"
+import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { LayoutDashboard } from "lucide-react"
@@ -53,7 +53,7 @@ const routes = [
     label: "Code Generation",
     icon: Code,
     href: "/code",
-    color: "text-green-200",
+    color: "text-emerald-500",
   },
   {
     label: "Settings",
@@ -63,6 +63,7 @@ const routes = [
   }
 ]
 const SideBar = () => {
+  const pathName = usePathname();
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
 
@@ -88,11 +89,11 @@ const SideBar = () => {
             <Link
               key={index}
               href={`/${route.href}`}
-              className="block w-full px-3 py-2 rounded-2xl  hover:bg-white/10 active:opacity-60 transition-all duration-200"
+              className={cn("block w-full px-3 py-2 rounded-2xl  hover:bg-white/10 active:opacity-60 transition-all duration-200",pathName===route.href ? ("text-white bg-white/10 ") : ("text-zinc-400"))}
             >
               <div className="flex items-center gap-3">
                 <Icon className={`w-5 h-5 ${route.color} transition-transform group-hover:scale-110`} />
-                <span className="text-base font-medium text-gray-400 group-hover:text-black">
+                <span className="text-base font-medium group-hover:text-black">
                   {route.label}
                 </span>
               </div>
