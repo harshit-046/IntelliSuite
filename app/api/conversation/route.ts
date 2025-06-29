@@ -1,16 +1,15 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from 'next/server';
 import { auth } from "@clerk/nextjs/server";
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+import { ChatMessage } from "@/app/(dashboard)/(routes)/conversation/page";
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(request: Request) {
     try {
-        const userId = auth();
+        const { userId } = await auth();
         const body = await request.json();
         const { messages } = body;
+        console.log(messages);
         if (!userId) {
             return NextResponse.json(
                 {
@@ -23,14 +22,14 @@ export async function POST(request: Request) {
             )
         }
 
-        if (!openai.apiKey) {
+        if (!genAI.apiKey) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: "OpenAI Key not configured"
+                    message: "Gemini Key not configured"
                 },
                 {
-                    status: 401
+                    status: 500
                 }
             )
         }
@@ -38,19 +37,30 @@ export async function POST(request: Request) {
         if (!messages) {
             return NextResponse.json({ error: "Messages are required" }, { status: 400 });
         }
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        const chatCompletion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: body.prompt }],
+        const formattedHistory = (messages as ChatMessage[])
+            .filter(msg => msg.role === "user" || msg.role === "model")
+            .map(msg => ({
+                role: msg.role as "user" | "model",
+                parts: [{ text: msg.content }],
+            }));
+
+        const chat = model.startChat({
+            history: formattedHistory,
         });
 
-        const aiResponse = chatCompletion.choices[0].message.content;
+        const latestMessage = messages[messages.length - 1]?.content;
+        const result = await chat.sendMessage(latestMessage);
+        const response = await result.response;
+        const text = response.text();
+
 
         return NextResponse.json({
             success: true,
-            response: aiResponse
+            message: text
         });
-    } 
+    }
     catch (error) {
         console.error(error);
         return NextResponse.json(
