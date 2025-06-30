@@ -16,7 +16,7 @@ const Heading = (props: HeadingProps) => {
                     <props.icon className={cn("w-10 h-10",props.iconColor)}/>
                 </div>
                 <div>
-                    <h2 className="text-3xl font-bold">Conversation</h2>
+                    <h2 className="text-3xl font-bold">{props.title}</h2>
                     <p className="text-sm text-muted-foreground">{props.description}</p>
                 </div>
             </div>

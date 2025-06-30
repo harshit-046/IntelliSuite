@@ -2,7 +2,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from 'next/server';
 import { auth } from "@clerk/nextjs/server";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-
 export interface ChatMessage {
     role: 'user' | 'model';
     content: string;
@@ -42,6 +41,11 @@ export async function POST(request: Request) {
         }
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
+        const instructionMessage = {
+            role: "user",
+            parts: [{text: "You are a code generator. Generate responses using markdown code snippets (triple backticks with language identifier). Include key explanations as code comments inside the code. After the code block, provide a brief external explanation (2-3 lines) describing what the code does overall. Keep everything clean and well-formatted."}],
+        }
+
         const formattedHistory = (messages as ChatMessage[])
             .filter(msg => msg.role === "user" || msg.role === "model")
             .map(msg => ({
@@ -50,7 +54,7 @@ export async function POST(request: Request) {
             }));
 
         const chat = model.startChat({
-            history: formattedHistory,
+            history: [instructionMessage,...formattedHistory],
         });
 
         const latestMessage = messages[messages.length - 1]?.content;
@@ -69,7 +73,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
             {
                 success: false,
-                error: "Failed to generate response"
+                error: "Failed to generate code"
             },
             {
                 status: 500
