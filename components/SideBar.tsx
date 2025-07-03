@@ -88,7 +88,7 @@ const SideBar = () => {
           return (
             <Link
               key={index}
-              href={`/${route.href}`}
+              href={`${route.href}`}
               className={cn("block w-full px-3 py-2 rounded-2xl  hover:bg-white/10 active:opacity-60 transition-all duration-200",pathName===route.href ? ("text-white bg-white/10 ") : ("text-zinc-400"))}
             >
               <div className="flex items-center gap-3">

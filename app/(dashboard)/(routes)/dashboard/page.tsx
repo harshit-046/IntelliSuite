@@ -61,24 +61,21 @@ const DashBoard = () => {
             </div>
 
             <div className='px-4 md:px-20 lg:px-32 space-y-4'>
-                {tools.map((tool, index) => {
+                {tools.map((tool) => {
                     return (
-                        <>
-                            <Card onClick={()=>{
-                                router.push(`${tool.href}`)
-                            }} key={index} className="hover:shadow-md transition cursor-pointer p-4">
-                                <div className="flex items-center justify-between p-4 border-black/5">
-                                    <div className="flex items-center gap-x-4">
-                                        <div className={cn("w-fit p-2 rounded-md", tool.bgColor)}>
-                                            <tool.icon className={cn("h-8 w-8", tool.color)} />
-                                        </div>
-                                        <div className="font-semibold">{tool.label}</div>
+                        <Card onClick={() => {
+                            router.push(`${tool.href}`)
+                        }} key={tool.label} className="hover:shadow-md transition cursor-pointer p-4">
+                            <div className="flex items-center justify-between p-4 border-black/5">
+                                <div className="flex items-center gap-x-4">
+                                    <div className={cn("w-fit p-2 rounded-md", tool.bgColor)}>
+                                        <tool.icon className={cn("h-8 w-8", tool.color)} />
                                     </div>
-                                    <ArrowRight />
+                                    <div className="font-semibold">{tool.label}</div>
                                 </div>
-                            </Card>
-
-                        </>
+                                <ArrowRight />
+                            </div>
+                        </Card>
                     )
                 })}
             </div>

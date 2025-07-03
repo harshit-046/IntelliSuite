@@ -14,8 +14,6 @@ import { useState } from 'react'
 import Empty from '@/components/Empty'
 import Loader from '@/components/Loader'
 import { cn } from '@/lib/utils'
-import UserAvatar from '@/components/UserAvatar'
-import ModelAvatar from '@/components/ModelAvatar'
 import { amountOptions } from './constant'
 import { resolutionOptions } from './constant'
 import {
@@ -97,21 +95,21 @@ const page = () => {
                                             disabled={isLoading}
                                             onValueChange={field.onChange}
                                             value={field.value}
-                                            defaultValue={field.value}                                           >
-                                            <FormControl className='m-0 p-0'>
+                                            defaultValue={field.value} >
+                                            <FormControl className='m-0 p-1'>
                                                 <SelectTrigger className="w-[100px]">
                                                     <SelectValue placeholder={field.value} />
                                                 </SelectTrigger>
                                             </FormControl>
-                                                <SelectContent>
-                                                    {amountOptions.map((option): any => {
-                                                        return (
-                                                            <SelectItem value={option.value} key={option.value}>
-                                                                {option.label}
-                                                            </SelectItem>
-                                                        )
-                                                    })}
-                                                </SelectContent>
+                                            <SelectContent>
+                                                {amountOptions.map((option): any => {
+                                                    return (
+                                                        <SelectItem value={option.value} key={option.value}>
+                                                            {option.label}
+                                                        </SelectItem>
+                                                    )
+                                                })}
+                                            </SelectContent>
                                         </Select>
                                     </FormItem>
                                 )}
@@ -121,22 +119,27 @@ const page = () => {
                                 name='resolution'
                                 render={({ field }) => (
                                     <FormItem className='col-span-20 lg:col-span-2'>
-                                        <FormControl className='m-0 p-0'>
-                                            <Select>
+                                        <Select
+                                            disabled={isLoading}
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl className='m-0 p-1'>
                                                 <SelectTrigger className="w-[100px]">
-                                                    <SelectValue placeholder="Resolution" />
+                                                    <SelectValue placeholder={field.value} />
                                                 </SelectTrigger>
-                                                <SelectContent>
-                                                    {resolutionOptions.map((resolutionOptions): any => {
-                                                        return (
-                                                            <SelectItem value="light" key={resolutionOptions.value}>
-                                                                {resolutionOptions.label}
-                                                            </SelectItem>
-                                                        )
-                                                    })}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {resolutionOptions.map((resolutionOptions): any => {
+                                                    return (
+                                                        <SelectItem value={resolutionOptions.value} key={resolutionOptions.value}>
+                                                            {resolutionOptions.label}
+                                                        </SelectItem>
+                                                    )
+                                                })}
+                                            </SelectContent>
+                                        </Select>
                                     </FormItem>
                                 )}
                             />
