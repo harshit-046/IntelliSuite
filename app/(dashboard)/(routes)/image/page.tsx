@@ -1,6 +1,6 @@
 "use client"
 import Heading from '@/components/Heading'
-import { MessagesSquare } from 'lucide-react'
+import { Download, MessagesSquare } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Empty from '@/components/Empty'
 import Loader from '@/components/Loader'
-import { cn } from '@/lib/utils'
 import { amountOptions } from './constant'
 import { resolutionOptions } from './constant'
 import {
@@ -24,6 +23,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import Image from 'next/image'
+import { Card, CardFooter } from '@/components/ui/card'
 
 export interface ChatMessage {
     role: 'user' | 'model';
@@ -152,18 +152,31 @@ const page = () => {
                     {images.length === 0 && !isLoading && <Empty label='No image generated yet' />}
                     {isLoading && <div className='p-8 rounded-lg w-full flex items-center justify-center bg-muted gap-2'><Loader /></div>}
 
-                    <div className='flex flex-col-reverse gap-y-4'>
-                        {images.map((images, index) => {
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8'>
+                        {images.map((src) => {
                             return (
-                                <div key={index} className={cn('p-8 w-full flex items-start rounded-lg gap-x-8')}>
-                                    <div className='relative w-20 h-20'>
+                                <Card
+                                    key={src}
+                                    className='rounded-lg overflow-hidden'
+                                >
+                                    <div className='relative aspect-square'>
                                         <Image
                                             fill
-                                            src={images}
-                                            alt="image"
+                                            src={src}
+                                            alt='Image'
                                         />
                                     </div>
-                                </div>
+                                    <CardFooter className='p-2'>
+                                        <Button 
+                                            onClick={()=> window.open(src)}
+                                            variant='secondary' 
+                                            className='w-full'
+                                        >
+                                           <Download className='h-4 w-4 mr-2'/>
+                                            Download
+                                        </Button>
+                                    </CardFooter>
+                                </Card>                        
                             )
                         })}
                     </div>

@@ -1,6 +1,6 @@
 "use client"
 import Heading from '@/components/Heading'
-import { Code, MessagesSquare } from 'lucide-react'
+import { Code } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"

@@ -1,16 +1,6 @@
 "use client"
-
 import { ArrowRight, Code, Image, MessageSquare, Music, Video } from "lucide-react"
-import {
-    Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import Link from "next/link"
+import {Card} from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 
