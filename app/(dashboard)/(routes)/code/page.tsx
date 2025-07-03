@@ -8,7 +8,7 @@ import { formSchema } from './constant'
 import { Button } from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Empty from '@/components/Empty'
@@ -25,8 +25,13 @@ export interface ChatMessage {
     role: 'user' | 'model';
     content: string;
 }
+interface MarkdownCodeProps {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
 
-const page = () => {
+const Page = () => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -110,12 +115,12 @@ const page = () => {
                                             remarkPlugins={[remarkGfm]}
                                             rehypePlugins={[rehypeHighlight]}
                                             components={{
-                                                pre: ({ node, ...props }) => (
+                                                pre: ({...props }) => (
                                                     <div className="overflow-auto w-full my-2 bg-gray-800 p-3 rounded-lg text-white text-sm">
                                                         <pre {...props} />
                                                     </div>
                                                 ),
-                                                code: ({ node, inline, className, children, ...props } :any) => {
+                                                code: ({inline, className, children, ...props } : MarkdownCodeProps) => {
                                                     return inline ? (
                                                         <code className="bg-black/10 text-red-600 px-1 py-0.5 rounded" {...props}>
                                                             {children}
@@ -141,4 +146,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

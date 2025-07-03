@@ -8,7 +8,7 @@ import { formSchema } from './constant'
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Empty from '@/components/Empty'
@@ -30,7 +30,7 @@ export interface ChatMessage {
     content: string;
 }
 
-const page = () => {
+const Page = () => {
     const [images, setImages] = useState<string[]>([]);
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -102,7 +102,7 @@ const page = () => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {amountOptions.map((option): any => {
+                                                {amountOptions.map((option) => {
                                                     return (
                                                         <SelectItem value={option.value} key={option.value}>
                                                             {option.label}
@@ -131,7 +131,7 @@ const page = () => {
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                {resolutionOptions.map((resolutionOptions): any => {
+                                                {resolutionOptions.map((resolutionOptions) => {
                                                     return (
                                                         <SelectItem value={resolutionOptions.value} key={resolutionOptions.value}>
                                                             {resolutionOptions.label}
@@ -187,4 +187,4 @@ const page = () => {
 }
 
 
-export default page
+export default Page

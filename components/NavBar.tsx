@@ -1,8 +1,6 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Menu } from 'lucide-react'
-import { SignOutButton, UserButton } from "@clerk/nextjs"
 import MobileSidebar from '@/components/MobileSidebar'
+import { UserButton } from '@clerk/nextjs'
 
 
 const NavBar = () => {

@@ -13,13 +13,13 @@ import {
   FormItem
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Empty from '@/components/Empty'
 import Loader from '@/components/Loader'
 
-const page = () => {
+const Page = () => {
   const [music, setMusic] = useState<string>();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -90,4 +90,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
